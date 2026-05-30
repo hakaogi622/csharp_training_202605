@@ -1,0 +1,81 @@
+/// ドメインオブジェクト
+/// データの意味と振る舞いを定義する
+/// 
+using WebApp_Src.Exceptions;
+namespace WebApp_Src.Applications.Domains;
+/// <summary>
+/// 所属部門を表すドメインオブジェクト
+/// </summary>
+public class Department
+{
+    public int? Id { get; private set; }      // 部門Id
+    public string? Name { get; private set; } = string.Empty;    // 部門名
+    private const int MaxLength = 20; // 部門名の長さ
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
+    /// <param name="id">部門Id</param>
+    /// <param name="name">部門名</param>
+    public Department(int? id, string? name)
+    {
+        // 部門名のルール検証
+        validateDepartmentName(name);
+        Id = id;
+        Name = name;
+    }
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
+    /// <param name="name">部門名</param>
+    public Department(string? name) : this(null, name) { }
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
+    /// <param name="id">部門Id</param>
+    /// <returns></returns>
+    public Department(int? id)
+    {
+        Id = id;
+    }
+
+    /// <summary>
+    /// 部門名のルール検証
+    /// </summary>
+    /// <param name="name"></param>
+    private void validateDepartmentName(string? name)
+    {
+        if (name is not null)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new DomainException("部門名は必須です");
+            if (name.Length > MaxLength)
+                throw new DomainException($"部門名は{MaxLength}文字以内で入力してください");
+        }
+    }
+
+    /// <summary>
+    /// 部門名の変更
+    /// </summary>
+    /// <param name="name"></param>
+    public void ChangeName(string? name)
+    {
+        // 部門名のルール検証
+        validateDepartmentName(name);
+        this.Name = name;
+    }
+
+    /// <summary>
+    /// 等価性の検証
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj is not Department other) return false;
+        return Id == other.Id;
+    }
+    public override int GetHashCode() => Id?.GetHashCode() ?? 0;
+
+    public override string ToString() => $"{Id?.ToString() ?? "未登録"}: {Name}";
+}

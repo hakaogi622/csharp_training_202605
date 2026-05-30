@@ -1,0 +1,63 @@
+@* ShowDept.cshtml*@
+@* クラスの名前空間を指定する(C#と同じ) *@
+@using WebApp_Src.Presentations.ViewModels
+@* View が受け取るデータ型（ViewModel）を宣言asp-for はこの型のプロパティと結びつける *@
+@model DepartmentListViewModel;
+@{
+    ViewData["Title"] = "部門一覧";
+}
+<h2 class="text-center mt-4">@ViewData["Title"]</h2>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-4 col-sm-6">
+            @* 表形式で表示*@
+            <table class="table table-hover">
+                <thread>
+                    <tr>
+                        @*左の列名*@
+                        <th>
+                            部門ID
+                        </th>
+                        @*右の列名*@
+                        <th>
+                            部門名
+                        </th>
+                        <th>更新</th>
+                        <th>削除</th>
+                    </tr>
+                </thread>
+                <tbody>
+                    @*ViewModelよりとってきたDepartmentsデータを表へ格納*@
+                    @foreach (var dept in Model.Departments)
+                    {
+                        <tr>
+                            @*左列は数値(DeptId)*@
+                            <td>@dept.Value</td>
+                            @*右列はテキスト(DeptName)*@
+                            <td>@dept.Text</td>
+                            <td>
+                                <a class="btn btn-primary" asp-controller="DepartmentUpdate" asp-action="Enter"
+                                   asp-route-id="@dept.Value">
+                                    更新
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" asp-controller="*" asp-action="Confirm"
+                                   asp-route-id="@dept.Value">
+                                    削除
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            @* メニューに戻る *@
+            <a asp-action="Index" asp-controller="Home" class="btn btn-secondary mt-3 ms-2">メニューに戻る</a>
+
+        </div>
+
+    </div>
+</div>
+</div>
