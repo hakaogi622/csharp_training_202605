@@ -23,4 +23,5 @@ public interface IDepartmentRepository
     /// </summary>
     void Create(Department department);
     void Update(Department department);
+    Department? DeleteById(int id);
 }

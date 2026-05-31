@@ -82,6 +82,7 @@ public static class DependencyExtension
     /// <param name="services">DIコンテナ</param>
     private static void SettingPresentations(IServiceCollection services)
     {
+        // 社員登録
         // 社員登録ViewModelをドメインオブジェクト:社員に変換するアダプターインターフェイスの実装
         services.AddScoped<EmployeeRegisterViewModelAdapter>();
         // TempDataへのEmployeeRegisterViewの保存・復元するためのクラス
@@ -91,7 +92,7 @@ public static class DependencyExtension
             new TempDataStore<EmployeeRegisterViewModel>("EmployeeRegisterViewModel")
         );
 
-
+        // 部門登録
         // 部門一覧ViewModelをドメインオブジェクト:部門に変換するアダプターインターフェイスの実装
         services.AddScoped<DepartmentRegisterViewModelAdapter>();
         // TempDataへのDepartmentListViewの保存・復元するためのクラス
@@ -101,7 +102,7 @@ public static class DependencyExtension
             new TempDataStore<DepartmentRegisterViewModel>("DepartmentRegisterViewModel")
         );
 
-
+        // 部門一覧
         // 部門一覧ViewModelをドメインオブジェクト:部門に変換するアダプターインターフェイスの実装
         services.AddScoped<DepartmentListViewModelAdapter>();
         // TempDataへのDepartmentListViewの保存・復元するためのクラス
@@ -113,7 +114,7 @@ public static class DependencyExtension
         // 部門一覧Serviceをドメインオブジェクト:部門に変換するアダプターインターフェイスの実装
         services.AddScoped<IDepartmentListService, DepartmentListService>();
 
-
+        // 社員一覧
         services.AddScoped<EmployeeListViewModelAdapter>();
         services.AddScoped(
             provider =>
@@ -121,6 +122,7 @@ public static class DependencyExtension
         );
         services.AddScoped<IEmployeeListService, EmployeeListService>();
 
+        // 社員削除
         services.AddScoped<DeleteEmployeeViewModelAdapter>();
         services.AddScoped(
             provider =>
@@ -128,6 +130,15 @@ public static class DependencyExtension
         );
         services.AddScoped<IDeleteEmployeeService, DeleteEmployeeService>();
 
+        // 部門削除
+        services.AddScoped<DeleteDepartmentViewModelAdapter>();
+        services.AddScoped(
+            provider =>
+            new TempDataStore<DeleteDepartmentViewModel>("DeleteDepartmentViewModel")
+        );
+        services.AddScoped<IDeleteDepartmentService, DeleteDepartmentService>();
+
+        // 社員更新
         services.AddScoped<EmployeeUpdateViewModelAdapter>();
         services.AddScoped(
             provider =>
@@ -135,6 +146,7 @@ public static class DependencyExtension
         );
         services.AddScoped<IEmployeeUpdateService, EmployeeUpdateService>();
 
+        // 部門更新
         services.AddScoped<DepartmentUpdateViewModelAdapter>();
         services.AddScoped(
             provider =>

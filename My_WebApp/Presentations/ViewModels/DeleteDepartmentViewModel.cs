@@ -6,6 +6,7 @@ namespace WebApp_Src.Presentations.ViewModels;
 
 public class DeleteDepartmentViewModel
 {
+    [Display(Name = "部門ID")]
     public int DeptId { get; set; }
     [Display(Name = "部門名")]
 
